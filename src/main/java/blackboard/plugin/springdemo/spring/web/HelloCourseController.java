@@ -18,23 +18,23 @@ import java.util.List;
 
 @Controller
 public class HelloCourseController {
-  @Autowired
-  private CourseMembershipDbLoader _membershipLoader;
+	@Autowired
+	private CourseMembershipDbLoader _membershipLoader;
 
-  @Autowired
-  private UserDbLoader _userLoader;
+	@Autowired
+	private UserDbLoader _userLoader;
 
-  @RequestMapping("/course_users")
-  public ModelAndView listCourseUsers(@IdParam("cid") Course course) throws KeyNotFoundException, PersistenceException {
-    ModelAndView mv = new ModelAndView("course_users");
-    mv.addObject("course", course);
+	@RequestMapping("/course_users")
+	public ModelAndView listCourseUsers(@IdParam("cid") Course course) throws KeyNotFoundException, PersistenceException {
+		ModelAndView mv = new ModelAndView("course_users");
+		mv.addObject("course", course);
 
-    List<CourseMembership> members = _membershipLoader.loadByCourseId(course.getId());
-    List<User> users = new ArrayList<>();
-    for (CourseMembership member : members) {
-      users.add(_userLoader.loadById(member.getUserId()));
-    }
-    mv.addObject("users", users);
-    return mv;
-  }
+		List<CourseMembership> members = _membershipLoader.loadByCourseId(course.getId());
+		List<User> users = new ArrayList<>();
+		for (CourseMembership member : members) {
+			users.add(_userLoader.loadById(member.getUserId()));
+		}
+		mv.addObject("users", users);
+		return mv;
+	}
 }
