@@ -23,5 +23,4 @@ public class HelloUserController {
 
 		return mv;
 	}
-
 }

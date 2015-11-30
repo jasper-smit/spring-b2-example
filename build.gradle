@@ -7,60 +7,83 @@ group "blackboard.plugin"
 version "1.0-SNAPSHOT"
 
 project.ext {
-  learnVersion = "9.1.201410.160373"
-  springVersion = "3.1.1.RELEASE"
-  hibernateVersion = "4.1.10.Final"
+    learnVersion = "9.1.201410.160373"
+    springVersion = "3.1.1.RELEASE"
+    hibernateVersion = "4.1.10.Final"
 }
 
 repositories {
-  mavenCentral()
-  maven {
-    url "https://maven.blackboard.com/content/repositories/releases/"
-  }
+    mavenCentral()
+    maven {
+        url "https://maven.blackboard.com/content/repositories/releases/"
+    }
+    	maven {
+		name "public"
+		url "${nexusBaseUrl}/groups/public"
+	}
+
 }
 
 configurations {
-  buildUtils
+    buildUtils
 }
 
 // define the project's dependencies
 dependencies {
-  // providedCompile dependencies are libraries needed to build, but should not be included in the B2 WAR.
-  providedCompile( "blackboard.platform:bb-platform:9.1.201410.160373" ) { transitive = false }
-  providedCompile( "blackboard.platform:bb-cms-admin:9.1.201410.160373" ) { transitive = false }
-  providedCompile( "blackboard.platform:bb-taglibs:9.1.201410.160373" ) { transitive = false }
+    // providedCompile dependencies are libraries needed to build, but should not be included in the B2 WAR.
+    providedCompile("blackboard.platform:bb-platform:9.1.201410.160373") { transitive = false }
+    providedCompile("blackboard.platform:bb-cms-admin:9.1.201410.160373") { transitive = false }
+    providedCompile("blackboard.platform:bb-taglibs:9.1.201410.160373") { transitive = false }
 
-  compile( "blackboard.platform:bb-spring-webapi:10.5" ) { transitive = false }
+    compile("blackboard.platform:bb-spring-webapi:10.5") { transitive = false }
 
-  compile "org.springframework:spring-aop:3.1.1.RELEASE",
-          "org.springframework:spring-asm:3.1.1.RELEASE",
-          "org.springframework:spring-beans:3.1.1.RELEASE",
-          "org.springframework:spring-context:3.1.1.RELEASE",
-          "org.springframework:spring-core:3.1.1.RELEASE",
-          "org.springframework:spring-expression:3.1.1.RELEASE",
-          "org.springframework:spring-web:3.1.1.RELEASE",
-          "org.springframework:spring-webmvc:3.1.1.RELEASE",
-          "org.springframework:spring-context-support:3.1.1.RELEASE",
-          "org.springframework:spring-jdbc:3.1.1.RELEASE",
-          "org.springframework:spring-orm:3.1.1.RELEASE",
-          "org.springframework:spring-tx:3.1.1.RELEASE"
+    compile "org.springframework:spring-aop:3.1.1.RELEASE",
+            "org.springframework:spring-asm:3.1.1.RELEASE",
+            "org.springframework:spring-beans:3.1.1.RELEASE",
+            "org.springframework:spring-context:3.1.1.RELEASE",
+            "org.springframework:spring-core:3.1.1.RELEASE",
+            "org.springframework:spring-expression:3.1.1.RELEASE",
+            "org.springframework:spring-web:3.1.1.RELEASE",
+            "org.springframework:spring-webmvc:3.1.1.RELEASE",
+            "org.springframework:spring-context-support:3.1.1.RELEASE",
+            "org.springframework:spring-jdbc:3.1.1.RELEASE",
+            "org.springframework:spring-orm:3.1.1.RELEASE",
+            "org.springframework:spring-tx:3.1.1.RELEASE"
+compile "com.intellij:annotations:12.0",
+			"com.google.code.findbugs:annotations:3.0.0"
+	compile "log4j:apache-log4j-extras:1.2.17"
 
-  compile( "org.hibernate:hibernate-core:4.1.10.Final" ) { transitive = true }
-  compile "org.hibernate:hibernate-entitymanager:4.1.10.Final"
 
-  runtime "org.javassist:javassist:3.17.1-GA",
-          "dom4j:dom4j:1.6.1"
 
-  buildUtils "org.oscelot:b2deploy-task:0.1.0"
+    compile("org.hibernate:hibernate-core:4.1.10.Final") { transitive = true }
+    compile "org.hibernate:hibernate-entitymanager:4.1.10.Final"
+
+    runtime "org.javassist:javassist:3.17.1-GA",
+            "dom4j:dom4j:1.6.1"
+
+    buildUtils "org.oscelot:b2deploy-task:0.1.0"
+    compile("nl.rug.commons:rug-commons-bb:3.12.1") { transitive = false }
+    compile("nl.rug.commons:rug-commons:3.2.1") { transitive = false }
+
+    providedCompile "blackboard.platform:bb-platform:${learnVersion}",
+            "blackboard.platform:bb-cms-admin:${learnVersion}",
+            "blackboard.platform:bb-taglibs:${learnVersion}",
+            "blackboard.platform:bb-bbxythos:${learnVersion}",
+            "blackboard.platform:xsscore:${learnVersion}"
+
+    providedCompile "javax.servlet:javax.servlet-api:3.0.1",
+            "javax.servlet.jsp:jsp-api:2.2"
+
+    providedCompile "commons-httpclient:commons-httpclient:3.1",
+            "com.google.guava:guava:17.0"
 }
 
-
 // Add a task to deploy a B2 using starting block
-task deployB2( dependsOn: "war" ) << {
-      ant.taskdef( name: "b2deploy", classname: "org.oscelot.ant.B2DeployTask", classpath: project.configurations.buildUtils.asPath )
-      ant.b2deploy( localfilepath: project.war.archivePath, host: System.getProperty("server"), courseorgavailable: 'true', clean: 'true' )
+task deployB2(dependsOn: "war") << {
+    ant.taskdef(name: "b2deploy", classname: "org.oscelot.ant.B2DeployTask", classpath: project.configurations.buildUtils.asPath)
+    ant.b2deploy(localfilepath: project.war.archivePath, host: System.getProperty("server"), courseorgavailable: 'true', clean: 'true')
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = '1.5'
+    gradleVersion = '1.5'
 }

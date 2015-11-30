@@ -1,39 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns="http://www.blackboard.com/bb-manifest-plugin"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://www.blackboard.com/bb-manifest-plugin http://fibbba.medu.com/xsd/bb-manifest-plugin.xsd">
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<manifest>
   <plugin>
 
-    <name value="Batch Folder Maker" />
-    <handle value="BatchFolderMaker" />
-    <description value="Batch Folder Maker" />
-    <default-locale value="en_US" />
-
-    <version value="1.0" />
-    <requires>
-      <bbversion value="9.1.130000.0" />
-    </requires>
+    <name value="plugin.name"/>
+    <handle value="BatchFolderMaker"/>
+    <version value="1.4.0"/>
+    <webapp-type value="javaext"/>
+    <default-locale value="en_US"/>
 
     <vendor>
-      <id value="UG" />
-      <name value="University of Groningen" />
-      <url value="http://rug.nl/" />
-      <description value="University of Groningen" />
+      <id value="RuG"/>
+      <name value="Rijksuniversiteit Groningen"/>
+      <url value="http://www.rug.nl/cit/esi"/>
+      <description value="Rijksuniversiteit Groningen - The Netherlands"/>
     </vendor>
 
-    <permissions>
-      <permission type="persist" name="*" actions="create,modify,delete,persist" />
-      <permission type="attribute" name="user.*" actions="get,set" />
-      <permission type="java.util.PropertyPermission" name="*" actions="read,write" />
-      <permission type="socket" name="*" actions="connect" />
-      
-      <!-- We need these permissions to allow Spring to auto-discover and wire beans together and Hibernate to interact with objects. -->
-      <permission type="java.lang.reflect.ReflectPermission" name="suppressAccessChecks" />
-      <permission type="java.lang.RuntimePermission" name="accessDeclaredMembers" />
-      <permission type="java.lang.RuntimePermission" name="createClassLoader" />
-      <permission type="java.lang.RuntimePermission" name="setContextClassLoader" />
-      <permission type="java.io.FilePermission" name="${java.home}/lib/*" actions="read" />
+    <http-actions>
+      <config value="do/adminMain"/>
+    </http-actions>
 
+    <requires>
+      <bbversion value="9.1.201410"/>
+    </requires>
+
+
+    <application-defs>
+      <application handle="bfmMain" name="Batch Folder Maker" use-ssl="true" can-allow-guest="false"
+                   is-sys-tool="false" is-course-tool="true" is-org-tool="true">
+        <description lang="en_US">Tool to automatically create a folder for each student in a course
+          in the course content of the content collection.
+        </description>
+        <links>
+          <link>
+            <handle value="folderMaker"/>
+            <type value="course_tool"/>
+            <name value="link.menu.name"/>
+            <url value="do/createFolders"/>
+            <description value="link.menu.description"/>
+          </link>
+        </links>
+      </application>
+
+      <application handle="bfmCc" name="Batch Folder Maker (dropbox)"
+                   use-ssl="true" can-allow-guest="false"
+                   is-sys-tool="false" is-course-tool="true" is-org-tool="true">
+        <links>
+          <link>
+            <handle value="contentCollection"/>
+            <!-- voorheen nav-2 -->
+            <type value="tool"/>
+            <name value="link.contentcollection.name"/>
+            <url value="do/contentcollection"/>
+            <description value="link.contentcollection.description"/>
+          </link>
+          <link>
+            <handle value="contentDropBox"/>
+            <!-- voorheen nav-3 -->
+            <type value="tool"/>
+            <name value="link.dropbox.name"/>
+            <url value="do/contentcollection?path=Dropbox"/>
+            <description value="link.dropbox.description"/>
+          </link>
+        </links>
+      </application>
+    </application-defs>
+
+
+    <permissions>
       <permission type="attribute" name="user.authinfo" actions="get,set"/>
       <permission type="attribute" name="user.personalinfo" actions="get,set"/>
 
@@ -103,8 +136,6 @@
       <!-- sometimes(?!) needed to initialize the database ConnectionPool -->
       <!-- also needed when using Apache Axis (webservices) -->
       <permission type="runtime" name="getClassLoader" actions=""/>
-
     </permissions>
-
   </plugin>
 </manifest>

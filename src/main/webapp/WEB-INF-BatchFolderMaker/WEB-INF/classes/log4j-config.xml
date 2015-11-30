@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<!--
+   @@app.handle and @@app.package@@ are tokens that will be replaced by
+   the Ant build script with values that are specific for the building
+   block being built.
+  -->
+<log4j:configuration debug="false">
+   <!--<appender name="@@app.handle@@" class="org.apache.log4j.rolling.RollingFileAppender">-->
+      <!--<param name="file" value="${rug.log4j.outputdir}/@@app.handle@@.log"/>-->
+  <appender name="BatchFolderMaker" class="org.apache.log4j.rolling.RollingFileAppender">
+      <param name="file" value="${rug.log4j.outputdir}/BatchFolderMaker.log"/>
+      <param name="append" value="true"/>
+      <param name="encoding" value="UTF-8"/>
+
+      <rollingPolicy class="org.apache.log4j.rolling.TimeBasedRollingPolicy">
+         <!--<param name="FileNamePattern" value="${rug.log4j.outputdir}/@@app.handle@@-log.%d.gz"/>-->
+         <param name="FileNamePattern" value="${rug.log4j.outputdir}/BatchFolderMaker-log.%d.gz"/>
+      </rollingPolicy>
+
+      <layout class="org.apache.log4j.EnhancedPatternLayout">
+         <param name="ConversionPattern" value="%d{ISO8601} %-5p  [%-20c{1}] - %m%n"/>
+         <!--<param name="ConversionPattern" value="%d{ISO8601} %-5p  %-20t [%-20c{1}] - %m%n"/>-->
+      </layout>
+   </appender>
+
+   <!--<logger name="@@app.package@@">-->
+   <logger name="nl.rug.blackboard.batchfoldermaker">
+      <level value="info"/>
+   </logger>
+
+   <logger name="nl.rug.lib">
+      <level value="info"/>
+   </logger>
+
+   <logger name="ruglib.compatible">
+      <level value="info"/>
+   </logger>
+
+   <logger name="nl.rug.jsp">
+      <level value="info"/>
+   </logger>
+
+   <logger name="nl.rug.blackboard.authentication">
+      <level value="warn"/>
+   </logger>
+
+   <logger name="nl.rug.blackboard.export">
+      <level value="info"/>
+   </logger>
+
+   <logger name="nl.rug.blackboard.abdex">
+      <level value="info"/>
+   </logger>
+
+   <logger name="nl.rug.abba">
+      <level value="info"/>
+   </logger>
+
+   <logger name="org.apache.activemq">
+      <level value="fatal" />
+   </logger>
+
+   <logger name="org.apache.struts.upload">
+      <level value="fatal" />
+   </logger>
+
+   <logger name="com.whirlycott.cache">
+      <level value="fatal" />
+   </logger>
+
+   <logger name="com.blackboard.plugin">
+      <level value="fatal" />
+   </logger>
+
+   <logger name="com.blackboard.bbb">
+      <level value="warn" />
+   </logger>
+
+   <logger name="blackboard.plugin">
+      <level value="fatal" />
+   </logger>
+
+   <logger name="blackboard.bbb">
+      <level value="fatal" />
+   </logger>
+
+   <logger name="blackboard.announcer.Announcer">
+      <level value="fatal" />
+   </logger>
+
+   <root>
+      <priority value="error"/>
+      <appender-ref ref="BatchFolderMaker"/>
+      <!--<appender-ref ref="@@app.handle@@"/>-->
+   </root>
+</log4j:configuration>
