@@ -4,8 +4,9 @@
           xsi:schemaLocation="http://www.blackboard.com/bb-manifest-plugin http://fibbba.medu.com/xsd/bb-manifest-plugin.xsd">
   <plugin>
 
+
     <name value="Batch Folder Maker" />
-    <handle value="BatchFolderMaker" />
+    <handle value="BFM" />
     <description value="Batch Folder Maker" />
     <default-locale value="en_US" />
 
@@ -21,19 +22,50 @@
       <description value="University of Groningen" />
     </vendor>
 
-    <permissions>
-      <permission type="persist" name="*" actions="create,modify,delete,persist" />
-      <permission type="attribute" name="user.*" actions="get,set" />
-      <permission type="java.util.PropertyPermission" name="*" actions="read,write" />
-      <permission type="socket" name="*" actions="connect" />
-      
-      <!-- We need these permissions to allow Spring to auto-discover and wire beans together and Hibernate to interact with objects. -->
-      <permission type="java.lang.reflect.ReflectPermission" name="suppressAccessChecks" />
-      <permission type="java.lang.RuntimePermission" name="accessDeclaredMembers" />
-      <permission type="java.lang.RuntimePermission" name="createClassLoader" />
-      <permission type="java.lang.RuntimePermission" name="setContextClassLoader" />
-      <permission type="java.io.FilePermission" name="${java.home}/lib/*" actions="read" />
 
+    <application-defs>
+      <application handle="bfmMain" name="Batch Folder Maker" use-ssl="true" can-allow-guest="false"
+                   is-sys-tool="false" is-course-tool="true" is-org-tool="true">
+        <description lang="en_US">Tool to automatically create a folder for each student in a course
+          in the course content of the content collection.
+        </description>
+        <links>
+          <link>
+            <handle value="folderMaker"/>
+            <type value="course_tool"/>
+            <name value="link.menu.name"/>
+            <url value="createFolders"/>
+            <description value="link.menu.description"/>
+          </link>
+        </links>
+      </application>
+
+      <application handle="bfmCc" name="Batch Folder Maker (dropbox)"
+                   use-ssl="true" can-allow-guest="false"
+                   is-sys-tool="false" is-course-tool="true" is-org-tool="true">
+        <links>
+          <link>
+            <handle value="contentCollection"/>
+            <!-- voorheen nav-2 -->
+            <type value="tool"/>
+            <name value="link.contentcollection.name"/>
+            <url value="contentCollection"/>
+            <description value="link.contentcollection.description"/>
+          </link>
+          <link>
+            <handle value="contentDropBox"/>
+            <!-- voorheen nav-3 -->
+            <type value="tool"/>
+            <name value="link.dropbox.name"/>
+            <url value="contentCollection/Dropbox"/>
+            <description value="link.dropbox.description"/>
+          </link>
+        </links>
+      </application>
+    </application-defs>
+
+
+    <permissions>
       <permission type="attribute" name="user.authinfo" actions="get,set"/>
       <permission type="attribute" name="user.personalinfo" actions="get,set"/>
 
