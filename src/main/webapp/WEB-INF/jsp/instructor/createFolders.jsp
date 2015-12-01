@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="ng" uri="/bbNG" %>
 <%@ taglib prefix="rug" uri="http://uocg.rug.nl/taglib" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <%@ page errorPage="/courseError.jsp" %>
 
@@ -84,6 +85,10 @@
       <ng:step title="Labels">
         <div id="personalFolders">
           <h3>Labels</h3>
+
+          <fmt:message var="test" key="b2.description" />
+          <h2>${test}</h2>
+
 
           <div class="privileges">
             <span class="label">&nbsp;</span>

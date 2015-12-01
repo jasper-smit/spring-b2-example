@@ -57,14 +57,14 @@ buildscript {
 }
 
 repositories {
-	mavenCentral()
-	maven {
-		url "https://maven.blackboard.com/content/repositories/releases/"
-	}
-	maven {
-		name "public"
-		url "https://nexus.cit.rug.nl/content/groups/public"
-	}
+    mavenCentral()
+    maven {
+        url "https://maven.blackboard.com/content/repositories/releases/"
+    }
+    maven {
+        name "public"
+        url "${nexusBaseUrl}/groups/public"
+    }
 }
 
 configurations {
@@ -79,6 +79,7 @@ dependencies {
 	compile "com.intellij:annotations:12.0",
 			"com.google.code.findbugs:annotations:3.0.0"
 	compile "log4j:apache-log4j-extras:1.2.17"
+
 
 	providedCompile "javax.servlet:javax.servlet-api:3.0.1",
 			"javax.servlet.jsp:jsp-api:2.2",
