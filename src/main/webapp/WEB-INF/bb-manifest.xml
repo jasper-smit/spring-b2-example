@@ -6,7 +6,7 @@
 
 
     <name value="Batch Folder Maker" />
-    <handle value="BFM" />
+    <handle value="BatchFolderMaker" />
     <description value="Batch Folder Maker" />
     <default-locale value="en_US" />
 

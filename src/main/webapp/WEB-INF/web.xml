@@ -6,6 +6,20 @@
 
   <display-name>Spring Demo</display-name>
 
+
+  <context-param>
+    <param-name>blackboard.plugin.vendor</param-name>
+    <param-value>UG</param-value>
+  </context-param>
+  <context-param>
+    <param-name>blackboard.plugin.handle</param-name>
+    <param-value>BatchFolderMaker</param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>blackboard.platform.plugin.PluginLocalizationContextListener</listener-class>
+  </listener>
+
   <!-- The central dispatcher servlet for the spring side of things-->
   <servlet>
     <servlet-name>spring</servlet-name>

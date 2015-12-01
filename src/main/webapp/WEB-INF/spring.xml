@@ -49,6 +49,13 @@
       <bean class="blackboard.platform.spring.web.interceptors.DefaultInterceptor" />
   </mvc:interceptors>
 
+  <bean id="bundleManager"
+        class="blackboard.platform.spring.service.impl.BundleManagerImpl">
+    <constructor-arg value="UG" />
+    <constructor-arg value="BatchFolderMaker" />
+  </bean>
+
+
   <!-- Handle exceptions generically -->
   <bean id="genericExceptionResolver"
     class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

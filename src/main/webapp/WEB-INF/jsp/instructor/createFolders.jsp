@@ -86,9 +86,8 @@
         <div id="personalFolders">
           <h3>Labels</h3>
 
-          <fmt:message var="test" key="b2.description" />
+          <fmt:message var="test" key="plugin.name" bundle="${bundle}"/>
           <h2>${test}</h2>
-
 
           <div class="privileges">
             <span class="label">&nbsp;</span>
